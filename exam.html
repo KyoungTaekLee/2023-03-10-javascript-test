@@ -1,162 +1,219 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- @media screen and (min-width:1280px) and (max-width: 1920px){ -->
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<style>
-  * {
-    box-sizing: border-box;
-    border: 1px solid black;
-    margin: 0;
-  }
-</style>
-
-<body>
-  <div id="root"></div>
-  <script src="./source/modulefile.js"></script>
-  <!-- 변경하지 않을 것 -->
-  <script>
-    const a = _EXAMDATA;
-    console.log(a); // 위 하이퍼링크된 js 파일 데이터
-    // 자유롭게 활용
-    // modulefile.js 정보 가져오기
-    const teamName = _EXAMDATA.teamInformation.teamName;
-    const teamNameStory = _EXAMDATA.teamInformation.teamNameStory;
-    const training = _EXAMDATA.trainingInformation.subject;
-    console.log(training);
-
-    const root = document.getElementById('root');
-
-    //구조 만드는 함수
-    function makeStruct(addNum, tagName, parent) {
-      for (let i = 0; i < addNum; i++) {
-        const element = document.createElement(tagName);
-        parent.appendChild(element);
+  <!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      border: 1px solid black;
+      margin: 0;
+    }
+  </style>
+  
+  <body>
+    <div id="root"></div>
+    <script src="./source/modulefile.js"></script>
+    <!-- 변경하지 않을 것 -->
+    <script>
+      // let media = window.matchMedia("screen and (min-width: 1280px) and (max-width: 1920px)");
+      // media.addListener(function (e) {
+      //   if (media.matches) {
+      //     console.log("desktop")
+      //   } else {
+      //     console.log("mobile");
+      //   }
+      // })
+  
+      const a = _EXAMDATA;
+      console.log(a); // 위 하이퍼링크된 js 파일 데이터
+      // 자유롭게 활용
+      // modulefile.js 정보 가져오기
+      const teamName = _EXAMDATA.teamInformation.teamName;
+      const teamNameStory = _EXAMDATA.teamInformation.teamNameStory;
+      const training = _EXAMDATA.trainingInformation.subject;
+      const member = _EXAMDATA.teamInformation.teamAllMember;
+  
+      console.log(member);
+  
+      const root = document.getElementById('root');
+  
+  
+      //구조 만드는 함수
+      function makeStruct(addNum, tagName, parent) {
+        for (let i = 0; i < addNum; i++) {
+          const element = document.createElement(tagName);
+          parent.appendChild(element);
+        }
       }
-    }
-
-    // 구조의 스타일 주는 함수
-    function makeStyle(object) {
-      for (let i = 0; i < object.firstArray.length; i++) {
-        object.element.style[object.firstArray[i]] = object.secondArray[i];
+  
+      // 구조의 스타일 주는 함수
+      function makeStyle(object) {
+        for (let i = 0; i < object.firstArray.length; i++) {
+          object.element.style[object.firstArray[i]] = object.secondArray[i];
+        }
       }
-    }
-
-    // nav > div > text 입력 함수
-    function makeTextArray(state, ...text) {
-      state.innerHTML = text[changeNum];
-    }
-
-    // text 만드는 함수
-    function makeText(state, text) {
-      state.innerHTML = text;
-    }
-
-    //구조 만드는 함수 호출
-    makeStruct(1, 'header', root);
-    makeStruct(1, 'main', root);
-    makeStruct(1, 'nav', root.children[1]);
-    makeStruct(3, 'div', root.children[1].children[0]);
-    makeStruct(1, 'section', root.children[1]);
-    makeStruct(5, 'div', root.children[1].children[1])
-    makeStruct(1, 'footer', root);
-
-
-    //--구조 완성--
-    //--스타일 시작--
-
-    console.dir(root.style)
-
-    // root 스타일
-    const rootStyle = {
-      firstArray: ["width", "height"],
-      secondArray: ["100vw", "100vh"],
-      element: root
-    }
-    makeStyle(rootStyle);
-
-    // header 스타일
-    const headerStyle = {
-      firstArray: ["width", "height", "display", "alignItems", "justifyContent", "fontSize", "background"],
-      secondArray: ["100vw", "20vh", "flex", "center", "center", "50px", "lightgray"],
-      element: root.children[0]
-    }
-    root.children[0].innerHTML = teamName;
-    makeStyle(headerStyle);
-
-    // main 스타일
-    const mainStyle = {
-      firstArray: ["width", "height", "display", "flexDirection"],
-      secondArray: ["100vw", "70vh", "flex", "row"],
-      element: root.children[1]
-    }
-    makeStyle(mainStyle);
-
-    //nav 스타일
-    const navStyle = {
-      firstArray: ["width", "height", "display", "alignItems", "justifyContent", "flexDirection"],
-      secondArray: ["30vw", "70vh", "flex", "center", "space-around", "column"],
-      element: root.children[1].children[0]
-    }
-    makeStyle(navStyle);
-
-    //nav > div 스타일
-    let changeNum = 0;
-    for (changeNum = 0; changeNum < 3; changeNum++) {
-      const navdivStyle = {
-        firstArray: ["width", "height", "display", "alignItems", "justifyContent"],
-        secondArray: ["20vw", "10vh", "flex", "center", "center"],
-        element: root.children[1].children[0].children[changeNum]
+  
+      // nav > div > text 입력 함수
+      function makeTextArray(state, ...text) {
+        state.innerHTML = text[changeNum];
       }
-      makeTextArray(root.children[1].children[0].children[changeNum], "History", "TeamName", "Training");
-      makeStyle(navdivStyle);
-    }
-
-    //section 스타일
-    const sectionStyle = {
-      firstArray: ["width", "height", "margin","display", "alignItems", "justifyContent","flexDirection"],
-      secondArray: ["70vw", "60vh", "5%","flex","center","space-around","column"],
-      element: root.children[1].children[1]
-    }
-    makeStyle(sectionStyle);
-
-    // section > div 스타일
-    for(let i = 0; i< 5; i++){
-      const sectiondivStyle = {
-        firstArray: ["width","height"],
-        secondArray: ["50vw","10vh"],
-        element: root.children[1].children[1].children[i]
+  
+      // text 만드는 함수
+      function makeText(state, ...text) {
+        state.innerHTML = text;
       }
-      makeStyle(sectiondivStyle);
-    }
-
-    // footer 스타일
-    const footerStyle = {
-      firstArray: ["width", "height"],
-      secondArray: ["100vw", "10vh"],
-      element: root.children[2]
-    }
-    makeStyle(footerStyle);
-
-
-    // --스타일 완성--
-    // --이벤트 시작--
-
-    root.children[1].children[0].children[0].addEventListener('click', function () {
-      makeText(root.children[1].children[1], teamNameStory);
-    })
-    root.children[1].children[0].children[1].addEventListener('click', function () {
-
-    })
-    root.children[1].children[0].children[2].addEventListener('click', function () {
-      makeText(root.children[1].children[1], training);
-    })
-
-  </script>
-</body>
-
-</html>
+  
+      //구조 만드는 함수 호출
+      makeStruct(1, 'header', root);
+      makeStruct(1, 'main', root);
+      makeStruct(1, 'nav', root.children[1]);
+      makeStruct(3, 'div', root.children[1].children[0]);
+      makeStruct(1, 'section', root.children[1]);
+      makeStruct(3, 'div', root.children[1].children[1])
+      makeStruct(1, 'div', root.children[1].children[1].children[0])
+      makeStruct(5, 'div', root.children[1].children[1].children[1])
+      makeStruct(1, 'div', root.children[1].children[1].children[2])
+      makeStruct(1, 'footer', root);
+  
+      //--구조 완성--
+      //--스타일 시작--
+  
+      console.dir(root.style)
+  
+  
+      // root 스타일
+      const rootStyle = {
+        firstArray: ["width", "height"],
+        secondArray: ["100vw", "100vh"],
+        element: root
+      }
+      makeStyle(rootStyle);
+  
+      // header 스타일
+      const headerStyle = {
+        firstArray: ["width", "height", "display", "alignItems", "justifyContent", "fontSize", "background"],
+        secondArray: ["100vw", "20vh", "flex", "center", "center", "50px", "lightgray"],
+        element: root.children[0]
+      }
+      root.children[0].innerHTML = teamName;
+      makeStyle(headerStyle);
+  
+      // main 스타일
+      const mainStyle = {
+        firstArray: ["width", "height", "display", "flexDirection"],
+        secondArray: ["100vw", "70vh", "flex", "row"],
+        element: root.children[1]
+      }
+      makeStyle(mainStyle);
+  
+      //nav 스타일
+      const navStyle = {
+        firstArray: ["width", "height", "display", "alignItems", "justifyContent", "flexDirection"],
+        secondArray: ["30vw", "70vh", "flex", "center", "space-around", "column"],
+        element: root.children[1].children[0]
+      }
+      makeStyle(navStyle);
+  
+      //nav > div 스타일
+      let changeNum = 0;
+      for (changeNum = 0; changeNum < 3; changeNum++) {
+        const navdivStyle = {
+          firstArray: ["width", "height", "display", "alignItems", "justifyContent"],
+          secondArray: ["20vw", "10vh", "flex", "center", "center"],
+          element: root.children[1].children[0].children[changeNum]
+        }
+        makeTextArray(root.children[1].children[0].children[changeNum], "History", "TeamName", "Training");
+        makeStyle(navdivStyle);
+      }
+      console.dir(root.children[1].children[0].children[1])
+  
+      //section 스타일
+      const sectionStyle = {
+        firstArray: ["width", "height", "margin", "display", "alignItems", "justifyContent", "flexDirection"],
+        secondArray: ["70vw", "60vh", "5%", "flex", "center", "space-around", "column"],
+        element: root.children[1].children[1]
+      }
+      makeStyle(sectionStyle);
+  
+      // section > div 스타일
+      for (let i = 0; i < 3; i++) {
+        const sectiondivStyle = {
+          firstArray: ["width", "height",],
+          secondArray: ["50vw", "50vh",],
+          element: root.children[1].children[1].children[i]
+        }
+        makeStyle(sectiondivStyle)
+      }
+  
+      // section > div > div[0] 스타일 
+      const sectiondivoneStyle = {
+        firstArray: ["width", "height",],
+        secondArray: ["50vw", "20vh",],
+        element: root.children[1].children[1].children[0].children[0]
+      }
+      makeStyle(sectiondivoneStyle);
+  
+      // section > div > div[1] 스타일
+      for (let i = 0; i < 5; i++) {
+        const sectiondivtwoStyle = {
+          firstArray: ["width", "height",],
+          secondArray: ["50vw", "10vh",],
+          element: root.children[1].children[1].children[1].children[i]
+        }
+        makeText(root.children[1].children[1].children[1].children[i], member[i].name)
+        makeStyle(sectiondivtwoStyle);
+      }
+  
+      // section > div > div[2] 스타일
+      const sectiondivthreeStyle = {
+        firstArray: ["width", "height",],
+        secondArray: ["50vw", "30vh",],
+        element: root.children[1].children[1].children[2].children[0]
+      }
+      makeStyle(sectiondivthreeStyle);
+  
+      // footer 스타일
+      const footerStyle = {
+        firstArray: ["width", "height"],
+        secondArray: ["100vw", "10vh"],
+        element: root.children[2]
+      }
+      makeStyle(footerStyle);
+  
+      // --스타일 완성--
+      // --이벤트 시작--
+  
+      root.children[1].children[1].style.display = "none";
+      root.children[1].children[0].children[0].addEventListener('click', function () {
+        root.children[1].children[1].style.display = "flex";
+        root.children[1].children[1].children[0].style.display = "block";
+        root.children[1].children[1].children[1].style.display = "none";
+        root.children[1].children[1].children[2].style.display = "none";
+      })
+  
+      root.children[1].children[0].children[1].addEventListener('click', function () {
+        root.children[1].children[1].style.display = "flex";
+        root.children[1].children[1].children[0].style.display = "none";
+        root.children[1].children[1].children[1].style.display = "block";
+        root.children[1].children[1].children[2].style.display = "none";
+      })
+  
+  
+      root.children[1].children[0].children[2].addEventListener('click', function () {
+        root.children[1].children[1].style.display = "flex";
+        root.children[1].children[1].children[0].style.display = "none";
+        root.children[1].children[1].children[1].style.display = "none";
+        root.children[1].children[1].children[2].style.display = "block";
+      })
+  
+    </script>
+  </body>
+  
+  </html>
